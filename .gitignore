@@ -1,1 +1,6 @@
 .venv/
+.vscode/
+build/
+
+src/__pycache__/
+src/data.txt

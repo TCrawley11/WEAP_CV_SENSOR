@@ -1,6 +1,27 @@
-# Setup Development Instructions
+# Sensor/Hardware Setup for WE AutoPilot
+This is the repository for all sensors setup to use as a fallback for any issues we run into. Currently, the main setupis going towards the Raspberry Pi and the LiDAR but other sensors will be up here soon!
 
-## How to setup Raspberry Pi for development with SSH
+</br>
+
+## Table of Contents
+- [Raspberry Pi for development with SSH](#raspberry-pi-for-development-with-ssh)
+  - [Flash the Raspberry Pi's SD Card with Ubuntu Server 22.04](#flash-the-raspberry-pis-sd-card-with-ubuntu-server-2204)
+  - [Setup Device Hotspot (Windows, not sure about Mac)](#setup-device-hotspot-windows-not-sure-about-mac)
+  - [Connecting to the Raspberry Pi](#connecting-to-the-raspberry-pi)
+  - [Install all dependencies to develop with WEAP](#install-all-dependencies-to-develop-with-weap)
+- [LiDAR Setup Instructions](#lidar-setup-instructions)
+  - [Method 1: Setup Standalone With Drivers](#method-1-setup-standalone-with-drivers)
+  - [Method 2: Setup with ROS2 & RVIZ2 on Linux](#method-2-setup-with-ros2--rviz2-on-linux)
+    - [Connect the LiDAR](#connect-the-lidar)
+    - [Install LiDAR ROS2 Package](#install-lidar-ros2-package)
+    - [Setup System with our version of LiDAR](#setup-system-with-our-version-of-lidar)
+    - [Build & Run](#build--run)
+    - [Start the LiDAR](#start-the-lidar)
+    - [View Data and Rviz2](#view-data-and-rviz2)
+
+</br>
+
+## Raspberry Pi for development with SSH
 
 ### Flash the Raspberry Pi's SD Card with Ubuntu Server 22.04
 
@@ -100,10 +121,47 @@ pyenv global 3.10.14
 python --version
 ```
 
+</br>
 
-### Connect the LiDAR
+## LiDAR Setup Instructions
+> There are two sets of instructions. You may run it on ROS 2 wih RVIZ 2 but that takes up a lot of resources which makes it impractical to run and SSH to. 
 
-- Make sure you have plugged in the LiDAR sensor to one of the USB ports on your Raspberry Pi (We will use USB 0 for this example).
+</br>
+
+### Method 1: Setup Standalone With Drivers
+
+1. Plug in the LiDAR WITH the UART board. 
+
+2. Download the driver based on your OS from the "Releases" section of thie repository.
+
+3. Check which COM port it is being read from through device manager (or the Linux/Mac equivalent of that)
+
+    - It should say the driver name alongside the COM port in brackets.
+
+![Device Manager](assets/image6.png)
+
+4. Change line 115 in main.py to the correct COM port.
+![Code for Port](assets/image5.png)
+
+5. Create a venv if you would like and install all dependencies of the **src/main.py** file.
+
+6. Change directory to src and run the main.py file.
+
+    - This will display a MatPlotLib diagram displaying the points accumulated every 20ms.
+
+    - Read through the code to understand how we parse through the packets.
+
+7. The data sheet with all the hardware/software details is attached with the release alongside the drivers.
+
+</br>
+
+---
+
+### Method 2: Setup with ROS2 & RVIZ2 on Linux
+
+#### Connect the LiDAR
+
+- Make sure you have plugged in the LiDAR sensor to one of the USB ports on your Raspberry Pi (We will use USB0 for this example).
 
 </br>
 
@@ -182,7 +240,7 @@ echo source ~/ldlidar_ros2_ws/install/setup.sh >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Start the LiDAR
+#### Start the LiDAR
 
 
 - Before you run the LiDAR you ened to install ROS 2
@@ -225,7 +283,7 @@ ros2 launch ldlidar_stl_ros2 stl19p.launch.py
 ros2 launch ldlidar_stl_ros2 viewer_stl19p.launch.py
 ```
 
-### View Data and Rviz2
+#### View Data and Rviz2
 
 Open a new terminal for this AFTER you start the node.
 
