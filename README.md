@@ -11,7 +11,7 @@ This is the repository for all sensors setup to use as a fallback for any issues
   - [Install all dependencies to develop with WEAP](#install-all-dependencies-to-develop-with-weap)
 - [LiDAR Setup Instructions](#lidar-setup-instructions)
   - [Method 1: Setup Standalone With Drivers](#method-1-setup-standalone-with-drivers)
-  - [Method 2: Setup with ROS2 & RVIZ2 on Linux](#method-2-setup-with-ros2--rviz2-on-linux)
+  - [Method 2: Setup with ROS2 & RVIZ2 on Linux (OUTDATED AND NOT USED ANYMORE GO BACK TO COMMIT bfb8188)](#method-2-setup-with-ros2--rviz2-on-linux)
     - [Connect the LiDAR](#connect-the-lidar)
     - [Install LiDAR ROS2 Package](#install-lidar-ros2-package)
     - [Setup System with our version of LiDAR](#setup-system-with-our-version-of-lidar)
@@ -157,7 +157,10 @@ python --version
 
 ---
 
-### Method 2: Setup with ROS2 & RVIZ2 on Linux
+<details>
+  <summary>
+    <h3 style="display:inline; margin:0;">Method 2: Setup with ROS2 & RVIZ2 on Linux (OUTDATED, CHECKOUT TO COMMIT bfb8188)</h3>
+  </summary>
 
 #### Connect the LiDAR
 
@@ -293,3 +296,5 @@ Open a new terminal for this AFTER you start the node.
 ros2 topic list
 ros2 topic echo /scan
 ```
+
+</details>
