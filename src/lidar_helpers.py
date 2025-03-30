@@ -1,4 +1,5 @@
 import time
+import math
 from typing import List
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -34,6 +35,26 @@ def circular_shift(data: List[float]) -> List[float]:
     if not data:
         return data
     return data[1:] + [data[0]]
+
+def calculate_angle_difference(start_angle: int, end_angle: int) -> float:
+    """
+    Calculate the angle in radians from start_angle to end_angle.
+    The angles are given in hundredths of a degree.
+    """
+    start_angle_rad = math.radians(start_angle / 100.0)
+    end_angle_rad = math.radians(end_angle / 100.0)
+    return end_angle_rad - start_angle_rad
+
+def get_distance(data: List[float]) -> float:
+    """
+    Calculate the distance from the data list.
+    The first element is the distance, the second is the strength.
+    """
+    if len(data) < 2:
+        raise ValueError("Data list must contain at least two elements.")
+    distance = data[0]
+    strength = data[1]
+    return distance, strength
 
 def listen(time: int):
     for i in range(time):
