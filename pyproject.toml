@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "weap_cv_sensors"  # Note: lowercase with underscore
+version = "0.1.0"
+description = "Provides LiDAR and ultrasonic sensor functionality for WEAP."
+readme = "README.md"
+authors = [
+    {name = "Tygo C", email = "tyfifago@gmail.com"},
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=1.20.0",
+    "matplotlib>=3.5.0",
+    "pyserial>=3.5",
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",  # For clustering algorithms
+    "open3d>=0.15.0",       # Optional: for advanced point cloud processing
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.0.0",
+    "flake8>=4.0.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.urls]
+"Homepage" = "https://github.com/TCrawley11/WEAP_CV_SENSOR"
+"Bug Tracker" = "https://github.com/TCrawley11/WEAP_CV_SENSOR/issues"
