@@ -112,7 +112,7 @@ def process_serial_data(ser):
     return packets_processed
 
 # Serial port settings
-PORT = "COM6"
+PORT = "/dev/ttyUSB0"
 BAUD = 230400
 ser = serial.Serial(PORT, baudrate=BAUD, bytesize=8,
                     stopbits=serial.STOPBITS_ONE, parity=serial.PARITY_NONE,
