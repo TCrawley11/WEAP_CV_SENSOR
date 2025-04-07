@@ -1,8 +1,17 @@
 import serial
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import numpy as np
 import struct
 import math
+
+# import the draw lidar bitmap functions
+from utils import lidar_to_bitmap
+
+"""
+    Provides functionality with CP210x LiDAR. Parses lidar packets and formats them.
+    Courtesy of Hamza. Edits by Tygo.
+"""
 
 # Global buffer for incoming serial data
 serial_buffer = b""
@@ -14,6 +23,10 @@ block_distances = []
 
 # Pre-calculate conversion factor (degrees to radians)
 RAD_FACTOR = math.pi / 180.0
+
+# Make a structure to hold run info, current format: {distance, angle}
+# hold on, lidar_to_bitmap only accepts list[float]?
+run_info = np.array([], dtype=[('distance', float), ('angle', float)])
 
 def parse_packet(packet48: bytes):
     """
@@ -86,6 +99,7 @@ def process_serial_data(ser):
         serial_buffer = serial_buffer[idx + 48 :]
         try:
             packet = parse_packet(packet_bytes)
+            print(packet)
         except ValueError:
             continue
 
@@ -109,6 +123,9 @@ def process_serial_data(ser):
         block_packet_count += 1
         packets_processed += 1
 
+        # run_info.append([distance, angle_deg])
+        # print(f"Measurement {i}: Angle = {angle_deg:.2f}° ({angle_rad:.2f} rad) -> Distance = {distance}")
+
     return packets_processed
 
 # Serial port settings
@@ -125,6 +142,9 @@ ax = plt.subplot(111, polar=True)
 ax.set_rmax(4000)  # Adjust as needed for your sensor's range
 ax.grid(True)
 ax.set_title("Real-Time LIDAR Data (Block of 200 Packets)")
+
+# Testing with draw bitmap functions
+# bitmap = lidar_to_bitmap._lidar_to_bitmap()
 
 def init():
     line.set_data([], [])
